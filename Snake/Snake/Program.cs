@@ -10,6 +10,7 @@ namespace Snake
     {
         static void Main(string[] args)
         {
+            // Рисуем поле
             Console.SetWindowSize(80, 25);
             Console.SetBufferSize(80, 25);
 
@@ -21,6 +22,11 @@ namespace Snake
             downLine.Draw();
             leftLine.Draw();
             rightLine.Draw();
+
+            //Змейка
+            Point p = new Point(2, 3, '*');
+            Snake snake = new Snake(p, 3, Direction.RIGHT);
+            snake.Draw();
 
             Console.ReadLine();
         }
