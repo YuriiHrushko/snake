@@ -15,14 +15,8 @@ namespace Snake
             Console.SetWindowSize(80, 25);
             Console.SetBufferSize(80, 25);
 
-            HorizontalLine upLine = new HorizontalLine(0, 78, 0, '+');
-            HorizontalLine downLine = new HorizontalLine(0, 78, 24, '+');
-            VerticalLine leftLine = new VerticalLine(0, 24, 0, '+');
-            VerticalLine rightLine = new VerticalLine(0, 24, 78, '+');
-            upLine.Draw();
-            downLine.Draw();
-            leftLine.Draw();
-            rightLine.Draw();
+            Walls walls = new Walls(80, 25);
+            walls.Draw();
 
             //Змейка
             Point p = new Point(2, 3, '*');
@@ -35,6 +29,8 @@ namespace Snake
 
             while (true)
             {
+                if (walls.IsHit(snake) || snake.IsHitTail())
+                    break;
                 if (snake.Eat(food))
                 {
                     food = foodCreator.CreateFood();
@@ -53,6 +49,30 @@ namespace Snake
                     snake.HandleKey(key.Key);
                 }
             }
+
+            WriteGameOver();
+            Console.ReadLine();
+
         }
+
+        static void WriteGameOver()
+        {
+            int xOffset = 25;
+            int yOffset = 8;
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.SetCursorPosition(xOffset, yOffset++);
+            WriteText("============================", xOffset, yOffset++);
+            WriteText("И Г Р А    О К О Н Ч Е Н А", xOffset + 1, yOffset++);
+            yOffset++;
+            WriteText("Автор: Грушко Юрий", xOffset + 2, yOffset++);
+            WriteText("============================", xOffset, yOffset++);
+        }
+
+        static void WriteText(String text, int xOffset, int yOffset)
+        {
+            Console.SetCursorPosition(xOffset, yOffset);
+            Console.WriteLine(text);
+        }
+
     }
 }
